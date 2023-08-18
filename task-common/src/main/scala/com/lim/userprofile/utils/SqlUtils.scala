@@ -98,11 +98,7 @@ object SqlUtils {
     }
     stat.close()
     connection.close()
-    if(resultList!=null){
-      Some(resultList(0))
-    }else{
-      None
-    }
+    resultList.headOption
 
   }
 

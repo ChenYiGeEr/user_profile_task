@@ -12,6 +12,17 @@ object TaskSQLApp {
 
   def main(args: Array[String]): Unit = {
 
+    // 1. 请求参数判断
+    if (args.length != 2) {
+      println("Usage: TaskSQLApp <taskId> <taskDate>")
+      System.exit(1)
+    }
+
+    // 第一个参数 会传入任务编号
+    val taskId: String = args.head
+    // 第二个参数 会传入任务的业务日期
+    val taskDate: String = args(1)
+
     val properties: Properties = PropertiesUtils.load("config.properties")
 
     val userProfileDbName = properties.getProperty("user-profile.dbname")
@@ -20,13 +31,8 @@ object TaskSQLApp {
     //1  初始化环境
     val sparkConf: SparkConf = new SparkConf()
                         .setAppName("tag_sql_app")
-                        .setMaster("local[*]")
+//                        .setMaster("local[*]")
     val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
-
-    // 第一个参数 会传入任务编号
-    val taskId: String = args(0)
-    // 第二个参数 会传入任务的业务日期
-    val taskDate: String = args(1)
 
     // 查询任务信息
     val taskInfo: TaskInfo = TaskInfoDAO.getTaskInfo(taskId)
