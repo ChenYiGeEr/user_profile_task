@@ -38,8 +38,23 @@ object TagInfoDAO {
    * */
   def getTagListOnTask(): List[TagInfo] = {
     /** 查询所有任务为启用状态的Tag标签 */
-    val tagListSql = "select tg.id,tag_code,tag_name,parent_tag_id,tag_type,tag_value_type,tag_value_limit,tag_task_id,tag_comment,tg.create_time" +
-      " from tag_info tg join task_info tk  on tg.tag_task_id=tk.id  where tk.task_status='1' "
+    val tagListSql =
+      s"""
+         |select
+         |  tg.id,
+         |  tag_code,
+         |  tag_name,
+         |  parent_tag_id,
+         |  tag_type,
+         |  tag_value_type,
+         |  tag_value_limit,
+         |  tag_task_id,
+         |  tag_comment,
+         |  tg.create_time
+         | from tag_info tg
+         | join task_info tk on tg.tag_task_id = tk.id
+         | where tk.task_status = '1'
+         |""".stripMargin
     SqlUtils.queryList(tagListSql, classOf[TagInfo], underScoreToCamel = true)
   }
 }

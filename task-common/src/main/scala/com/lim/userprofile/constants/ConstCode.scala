@@ -1,6 +1,9 @@
 package com.lim.userprofile.constants
 
-object  ConstCode {
+object ConstCode {
+
+  /** hive和clickhouse宽表前缀 */
+  val TABLE_NAME_PREFIX="up_tag_merge_"
 
   val TAG_VALUE_TYPE_LONG="1"
   val TAG_VALUE_TYPE_DECIMAL="2"

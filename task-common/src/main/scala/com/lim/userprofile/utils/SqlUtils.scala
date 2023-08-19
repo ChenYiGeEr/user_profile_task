@@ -46,7 +46,7 @@ object SqlUtils {
     val columnListSql: String =  "uid string ," + columnList.mkString(",")
     s"""
        | create table ${tableName} ( ${columnListSql} )
-       | comment ${tableComment}
+       | comment '${tableComment}'
        | ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\t'
        | LOCATION '${hdfsStorePath}/${dbName}/${tableName.toLowerCase}/';""".stripMargin
   }
