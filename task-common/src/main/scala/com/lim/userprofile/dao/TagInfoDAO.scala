@@ -51,9 +51,9 @@ object TagInfoDAO {
          |  tag_task_id,
          |  tag_comment,
          |  tg.create_time
-         | from tag_info tg
-         | join task_info tk on tg.tag_task_id = tk.id
-         | where tk.task_status = '1'
+         |from tag_info tg
+         |join task_info tk on tg.tag_task_id = tk.id
+         |where tk.task_status = '1'
          |""".stripMargin
     SqlUtils.queryList(tagListSql, classOf[TagInfo], underScoreToCamel = true)
   }

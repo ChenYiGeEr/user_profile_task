@@ -4,6 +4,8 @@ object ConstCode {
 
   /** hive和clickhouse宽表前缀 */
   val TABLE_NAME_PREFIX="up_tag_merge_"
+  /** clickhouse标签位图表前缀 */
+  val CLICKHOUSE_BITMAP_TAG_TABLE_PREFIX: String = "user_tag_value_"
 
   val TAG_VALUE_TYPE_LONG="1"
   val TAG_VALUE_TYPE_DECIMAL="2"

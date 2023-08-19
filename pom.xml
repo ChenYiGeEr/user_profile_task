@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>task-bitmap-ch</module>
         <module>task-common</module>
         <module>task-export-clickhouse</module>
         <module>task-tag-merge</module>
