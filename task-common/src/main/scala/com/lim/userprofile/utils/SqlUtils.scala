@@ -3,9 +3,9 @@ package com.lim.userprofile.utils
 import java.lang.reflect.Field
 import java.sql.{Connection, DriverManager, PreparedStatement, ResultSet, ResultSetMetaData, Statement}
 import java.util.Properties
-
 import com.alibaba.fastjson.JSONObject
 import com.google.common.base.CaseFormat
+import com.lim.userprofile.bean.TagInfo
 
 import scala.collection.mutable.ListBuffer
 
@@ -13,11 +13,43 @@ object SqlUtils {
 
   private val properties: Properties = PropertiesUtils.load("config.properties")
 
-
   val MYSQL_URL = properties.getProperty("mysql.url")
   val MYSQL_USERNAME = properties.getProperty("mysql.username")
   val MYSQL_PASSWORD = properties.getProperty("mysql.password")
 
+  /**
+   * genDropTableSQL
+   * <p>生成删除表的SQL</p>
+   *
+   * @param tableName 表名
+   * @return 删除表的sql语句
+   * */
+  def genDropTableSQL(tableName: String): String = { s"drop table if exists $tableName;" }
+
+  /**
+   * genCreateTableSQLNoPartition
+   * <p>生成创建没有分区的表的SQL</p>
+   *
+   * @param tagInfoList 标签信息列表
+   * @param tableName 表名
+   * @param tableComment 表注释
+   * @param dbName 数据库名称
+   * @param hdfsStorePath hive表存储在hdfs上的路径
+   * @return 创建表的sql语句
+   *  */
+  def genCreateTableSQLNoPartition(tagInfoList: List[TagInfo],
+                                   tableName :String,
+                                   tableComment: String,
+                                   dbName: String,
+                                   hdfsStorePath:String ): String = {
+    val columnList: List[String] = tagInfoList.map(_.tagCode.toLowerCase + "  string")
+    val columnListSql: String =  "uid string ," + columnList.mkString(",")
+    s"""
+       | create table ${tableName} ( ${columnListSql} )
+       | comment ${tableComment}
+       | ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\t'
+       | LOCATION '${hdfsStorePath}/${dbName}/${tableName.toLowerCase}/';""".stripMargin
+  }
 
   def queryList(sql: String): java.util.List[JSONObject] = {
     Class.forName("com.mysql.jdbc.Driver")

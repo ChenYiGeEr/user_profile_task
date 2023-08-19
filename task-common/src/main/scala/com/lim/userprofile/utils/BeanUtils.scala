@@ -10,8 +10,8 @@ object BeanUtils {
   /**
    * 对象相同属性copy
    *
-   * @param obj
-   * @param toResult
+   * @param obj     源对象
+   * @param toResult 目标对象
    * @return
    * @throws Exception
    * 转换报错
@@ -25,14 +25,14 @@ object BeanUtils {
       for (field <- fields) {
         breakable {
           field.setAccessible(true) //修改访问权限
-          if (Modifier.isFinal(field.getModifiers()))
+          if (Modifier.isFinal(field.getModifiers))
             break
           if (isWrapType(field)) {
-            val getMethodName = field.getName()
-            val setMethodName = field.getName()+"_$eq"
+            val getMethodName = field.getName
+            val setMethodName = field.getName+"_$eq"
             val getMethod = {
               try {
-                obj.getClass().getMethod(getMethodName)
+                obj.getClass.getMethod(getMethodName)
               } catch {
                 case ex: Exception =>
                   //  println(ex)
@@ -73,7 +73,7 @@ object BeanUtils {
       , "java.lang.Short", "java.lang.Byte", "java.lang.Boolean", "java.lang.Char"
       , "java.lang.String", "int", "double", "long"
       , "short", "byte", "boolean", "char", "float")
-    if (typeList.contains(field.getType().getName())) true else false
+    typeList.contains(field.getType.getName)
   }
 
 
