@@ -47,8 +47,11 @@ object TaskBitmapChApp {
     val tuples = getTableAndTagInfoList(tagInfoList)
     // 2.7 循环遍历执行插入sql
     for (tuples <- tuples) {
-      // 判断集合不为空时 执行sql语句
+      // 2.7.1 清空数据
+      ClickhouseUtils.executeSql(s"alter table $userProfileClickhouseDatabaseName.${tuples._1} delete where dt = '$taskDate';")
+      // 2.7.2 判断集合不为空时 执行sql语句
       if (tuples._2.nonEmpty) {
+        // 2.7.3 插入数据
         ClickhouseUtils.executeSql(genInsertSQLByTagType(userProfileClickhouseDatabaseName, tuples._1, tuples._2, withTableName, taskDate))
       }
     }
