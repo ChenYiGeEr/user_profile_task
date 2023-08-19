@@ -36,7 +36,7 @@ object TaskBitmapChApp {
     // 2.3 Spark环境
     val sparkConf: SparkConf = new SparkConf()
                                 .setAppName("tag_bitmap_ch_app")
-                                .setMaster("local[*]")
+//                                .setMaster("local[*]")
     val sparkContext = new SparkContext(sparkConf)
     // 2.4 加载配置文件
     val properties: Properties = PropertiesUtils.load("config.properties")
