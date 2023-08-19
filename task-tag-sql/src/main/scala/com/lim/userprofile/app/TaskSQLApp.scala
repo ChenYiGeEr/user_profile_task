@@ -21,7 +21,7 @@ object TaskSQLApp {
     // 第一个参数 会传入任务编号
     val taskId: String = args.head
     // 第二个参数 会传入任务的业务日期
-    val taskDate: String = args(1)
+    val taskDate: String = args.last
 
     val properties: Properties = PropertiesUtils.load("config.properties")
 
