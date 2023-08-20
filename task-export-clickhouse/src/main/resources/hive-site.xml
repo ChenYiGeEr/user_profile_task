@@ -1,41 +1,76 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
+    <!-- jdbc连接的URL -->
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:mysql://hadoop102:3306/metastore?createDatabaseIfNotExist=true&amp;characterEncoding=utf-8&amp;useSSL=false</value>
-        <description>JDBC connect string for a JDBC metastore</description>
-    </property>
-
+        <value>jdbc:mysql://hadoop102:3306/metastore?useSSL=false</value>
+</property>
+    <!-- jdbc连接的Driver-->
     <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
         <value>com.mysql.jdbc.Driver</value>
-        <description>Driver class name for a JDBC metastore</description>
-    </property>
-
+</property>
+    <!-- jdbc连接的username-->
     <property>
         <name>javax.jdo.option.ConnectionUserName</name>
         <value>root</value>
-        <description>username to use against metastore database</description>
     </property>
-
+    <!-- jdbc连接的password -->
     <property>
         <name>javax.jdo.option.ConnectionPassword</name>
         <value>centos_lim</value>
-        <description>password to use against metastore database</description>
-    </property>
+</property>
+    <!-- Hive默认在HDFS的工作目录 -->
     <property>
-        <name>hive.cli.print.header</name>
-        <value>true</value>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/user/hive/warehouse</value>
     </property>
-
-    <property>
-        <name>hive.cli.print.current.db</name>
-        <value>true</value>
-    </property>
+   <!-- Hive元数据存储的验证 -->
     <property>
         <name>hive.metastore.schema.verification</name>
         <value>false</value>
     </property>
-
+    <!-- 元数据存储授权  -->
+    <property>
+        <name>hive.metastore.event.db.notification.api.auth</name>
+        <value>false</value>
+    </property>
+<!-- 指定存储元数据要连接的地址 -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://hadoop102:9083</value>
+</property>
+<!-- 指定hiveserver2连接的host -->
+    <property>
+        <name>hive.server2.thrift.bind.host</name>
+        <value>hadoop102</value>
+</property>
+ <!-- 指定hiveserver2连接的端口号 -->
+    <property>
+        <name>hive.server2.thrift.port</name>
+        <value>10000</value>
+</property>
+<property>
+        <name>hive.server2.thrift.client.user</name>
+        <value>parallels</value>
+        <description>Username to use against thrift client</description>
+</property>
+<property>
+        <name>hive.server2.thrift.client.password</name>
+        <value>parallels</value>
+        <description>Password to use against thrift client</description>
+</property>
+<!-- <property>
+    <name>spark.yarn.jars</name>
+    <value>hdfs://hadoop102:8020/sparkjars/*</value>
+</property>
+<property>
+    <name>hive.execution.engine</name>
+    <value>spark</value>
+</property>
+<property>
+	<name>hive.spark.client.server.connect.timeout</name>
+	<value>100000ms</value>
+</property> -->
 </configuration>
