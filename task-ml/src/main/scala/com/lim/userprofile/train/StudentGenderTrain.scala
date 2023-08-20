@@ -12,7 +12,7 @@ object StudentGenderTrain {
     // sparkSession
     val sparkConf: SparkConf = new SparkConf()
       .setAppName("student_gender_test")
-//      .setMaster("local[*]")
+      .setMaster("local[*]")
     val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
     val sql =
       """
@@ -60,6 +60,9 @@ object StudentGenderTrain {
     println("把预测列转换为原始数据......")
     val convertedData: DataFrame = myPipeline.convertLabel(predictDF)
     convertedData.show(120, truncate = false)
+
+    println("打印评估报告 // 总准确率   //各个选项的 召回率 和精确率")
+    myPipeline.printEvaluateReport(predictDF)
   }
 
 }

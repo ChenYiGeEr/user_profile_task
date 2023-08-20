@@ -160,10 +160,9 @@ class PipelineUtils {
   //  打印评估报告 // 总准确率   //各个选项的 召回率 和精确率
   def printEvaluateReport(predictedDataFrame: DataFrame): Unit = {
     val predictAndLabelRDD: RDD[(Double, Double)] = predictedDataFrame.rdd.map { row =>
-      val predictValue: Double = row.getAs[Double]("prediction_col")
+      val predictValue: Double = row.getAs[Double]("prediction")
       val labelValue: Double = row.getAs[Double]("label_index")
       (predictValue, labelValue)
-
     }
     val metrics = new MulticlassMetrics(predictAndLabelRDD)
     println(" 总准确率: " + metrics.accuracy)
