@@ -8,10 +8,10 @@ import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
 object StudentGenderTrain {
 
   def main(args: Array[String]): Unit = {
-    // sparkSession
-    val sparkConf: SparkConf = new SparkConf().setAppName("student_gender_app").setMaster("local[*]")
-    val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
     println("开始查询数据.....")
+    // sparkSession
+    val sparkConf: SparkConf = new SparkConf().setAppName("student_gender_test") setMaster ("local[*]")
+    val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
     val sql =
       """
         | select uid,
@@ -22,7 +22,7 @@ object StudentGenderTrain {
         |       height,
         |       case skirt
         |           when '是' then 11
-        |           when '否' then 12 end    as skirt,
+        |           when '否' then 12 end as skirt,
         |       case age
         |           when '80后' then 80
         |           when '90后' then 90
