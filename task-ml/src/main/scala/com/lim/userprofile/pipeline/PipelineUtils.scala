@@ -186,4 +186,16 @@ class PipelineUtils {
     this
   }
 
+  //转换预测结果矢量
+  def convertLabel(dataFrame: DataFrame): DataFrame = {
+    if (pipelineModel == null) throw new RuntimeException("need training first! ")
+    val indexerModel: StringIndexerModel =
+      pipelineModel.stages(0).asInstanceOf[StringIndexerModel]
+    val converter = new IndexToString()
+      .setInputCol("prediction")
+      .setOutputCol("prediction_origin")
+      .setLabels(indexerModel.labels)
+    val convertedDF: DataFrame = converter.transform(dataFrame)
+    convertedDF
+  }
 }
