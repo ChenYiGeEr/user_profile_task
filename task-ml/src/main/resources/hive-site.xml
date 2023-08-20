@@ -24,6 +24,23 @@
         <value>centos_lim</value>
         <description>password to use against metastore database</description>
     </property>
+
+    <!-- Hive默认在HDFS的工作目录 -->
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/user/hive/warehouse</value>
+    </property>
+    <!-- Hive元数据存储的验证 -->
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>false</value>
+    </property>
+    <!-- 元数据存储授权  -->
+    <property>
+        <name>hive.metastore.event.db.notification.api.auth</name>
+        <value>false</value>
+    </property>
+
     <property>
         <name>hive.cli.print.header</name>
         <value>true</value>

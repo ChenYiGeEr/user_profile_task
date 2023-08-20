@@ -11,8 +11,8 @@ object StudentGenderTrain {
     println("开始查询数据.....")
     // sparkSession
     val sparkConf: SparkConf = new SparkConf()
-                                .setAppName("student_gender_test")
-//      .setMaster("local[*]")
+      .setAppName("student_gender_test")
+      .setMaster("local[*]")
     val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
     val sql =
       """
@@ -30,14 +30,13 @@ object StudentGenderTrain {
         |           when '90后' then 90
         |           when '00后' then 100 end as age,
         |       gender
-        |from student
+        |from user_profile.student
         """.stripMargin
-    sparkSession.sql("use user_profile")
     val dataFrame: DataFrame = sparkSession.sql(sql)
     dataFrame.show(120, truncate = false);
     println("切分数据.....")
     // 将数据分为两部分 70%训练数据 30%测试数据
-    val Array(trainDF,testDF): Array[Dataset[Row]] = dataFrame.randomSplit(Array(0.7,0.3))
+    val Array(trainDF, testDF): Array[Dataset[Row]] = dataFrame.randomSplit(Array(0.7, 0.3))
     println("开始初始化流水线.....")
     val myPipeline: PipelineUtils = new PipelineUtils()
       .setLabelColumnName("gender")
@@ -60,7 +59,7 @@ object StudentGenderTrain {
 
     println("把预测列转换为原始数据......")
     val convertedData: DataFrame = myPipeline.convertLabel(predictDF)
-    predictDF.show(120, truncate = false)
+    convertedData.show(120, truncate = false)
   }
 
 }
