@@ -12,7 +12,7 @@ object StudentGenderTrain {
     // sparkSession
     val sparkConf: SparkConf = new SparkConf()
       .setAppName("student_gender_test")
-      .setMaster("local[*]")
+//      .setMaster("local[*]")
     val sparkSession: SparkSession = SparkSession.builder().config(sparkConf).enableHiveSupport().getOrCreate()
     val sql =
       """
@@ -32,8 +32,8 @@ object StudentGenderTrain {
         |       gender
         |from user_profile.student
         """.stripMargin
-    val dataFrame: DataFrame = sparkSession.sql(sql)
-    dataFrame.show(120, truncate = false);
+    val dataFrame = sparkSession.sql(sql)
+    dataFrame.show(120, truncate = false)
     println("切分数据.....")
     // 将数据分为两部分 70%训练数据 30%测试数据
     val Array(trainDF, testDF): Array[Dataset[Row]] = dataFrame.randomSplit(Array(0.7, 0.3))
